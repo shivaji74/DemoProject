@@ -1,0 +1,94 @@
+/* 
+ * Enter your code here. Read input from STDIN. Print your output to STDOUT. 
+ * Your class should be named CandidateCode.
+*/
+
+import java.io.*;
+import java.util.*;
+public class CandidateCode {
+    
+        static int houses;
+        static int days;
+        static int paths[][];
+        static int visits[][];
+        static int gifts[];
+        static int flag=0;
+    public static String getPath(int start,int end) {
+        String path="";
+        System.out.println("in start function");
+                System.out.println("flag"+flag);
+        if(flag==1)
+          return path;
+        for(int j=0;j<houses-1;j++)
+        {
+            System.out.println("j:"+j);
+            System.out.println("start="+start);
+            System.out.println("end="+end);
+            if(start==end)
+            {
+                flag=1;
+                System.out.println("start and matches");
+                return ""+start;
+            }
+            if(paths[j][0]==start)
+            {
+                
+                path=start+" "+getPath(paths[j][1],end);
+            }
+        }
+        System.out.println("out"+path);
+        return path;
+    }
+    public static void main(String args[] ) throws Exception {
+        Scanner sc =new Scanner(System.in);
+        houses=sc.nextInt();
+        days=sc.nextInt();
+        int i=0;
+        paths=new int[houses-1][2];
+        visits=new int[days][2];
+        gifts=new int[houses];
+            
+            for(i=0;i<houses-1;i++)
+            {
+                paths[i][0]=sc.nextInt();
+                paths[i][1]=sc.nextInt();
+            }
+            
+            for(i=0;i<days;i++)
+            {
+                visits[i][0]=sc.nextInt();
+                visits[i][1]=sc.nextInt();
+            }
+            
+            for(i=0;i<days;i++){
+                flag=0;
+                System.out.println("flag"+flag);
+                int start=visits[i][0];
+                int end=visits[i][1];
+                System.out.println("start"+start);
+                System.out.println("end"+end);
+                String p=getPath(start,end);
+                System.out.println("p"+p);
+                if(p!="")
+                {
+                    String path[]=p.trim().split(" ");
+                    
+                    for(int j=0;j<path.length;j++)
+                    {  
+                        if(path[j]!="")
+                        {
+                            int house=Integer.parseInt(path[j]) ; 
+                            gifts[house-1]+=1;
+                        }
+                    }
+                }
+            }
+            
+            
+            Arrays.sort(gifts);
+            for( i=0;i<houses;i++)
+                System.out.println(gifts[i]);
+    	//Write code here
+
+   }
+}
